@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Сторінка 'Про мене' з прикладами використання аудіо та відео в HTML.">
+    <title>Мій перший HTML-сайт - Про мене</title>
+    <script src="../app.js" defer></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Головна</a></li>
+                <li><a href="about.html">Про мене</a></li>
+                <li><a href="contact.html">Контакти</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Про мене</h1>
+        <p>На цій сторінці я демонструю можливості HTML5 для вбудовування мультимедіа контенту. Це важливий елемент сучасних веб-сайтів.</p>
+
+        <section>
+            <h2>Моє демонстраційне відео</h2>
+            <p>Нижче наведено приклад вбудованого відео з використанням тегу &lt;video&gt;.</p>
+            <video controls width="640">
+                <source src="../assets/media/koma.mp4" type="video/mp4">
+                <p>Ваш браузер не підтримує HTML5-відео. 
+                   Ви можете <a href="../assets/media/koma.mp4">завантажити відеофайл тут</a>.
+                </p>
+            </video>
+        </section>
+
+        <section>
+            <h2>Мій улюблений аудіотрек</h2>
+            <p>Приклад відтворення звуку через тег &lt;audio&gt; з можливістю керування.</p>
+            <audio controls>
+                <source src="../assets/media/favorite_track.mp3" type="audio/mpeg">
+                <p>Ваш браузер не підтримує цей аудіофайл. 
+                   Ви можете <a href="../assets/media/favorite_track.mp3">завантажити аудіо тут</a>.
+                </p>
+            </audio>
+        </section>
+
+        <section>
+            <h2>Трохи тексту</h2>
+            <p>У вільний час я люблю вивчати нові технології та займатися програмуванням. Цей проект допоміг мені закріпити навички роботи з тегами <strong>video</strong> та <strong>audio</strong>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Студент Максим. Всі права захищені.</p>
+        <button id="bonus-btn">Натисни мене (JS Bonus)</button>
+    </footer>
+</body>
+</html>
