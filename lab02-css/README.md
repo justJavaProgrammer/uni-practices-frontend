@@ -24,9 +24,19 @@
 2. Для перегляду медіа-файлів переконайтеся, що відповідні файли знаходяться в папці `assets/media/`.
 
 ## Скріншоти (Приклади оформлення)
-- [Desktop-версія] (Додайте свій скріншот)
-- [Mobile-версія] (Додайте свій скріншот)
-
+- [Desktop-версія]
+![img.png](screenshots/screenshot_3.png)
+![img.png](screenshots/screenshot_4.png)
+![img.png](screenshots/screenshot_5.png)
+![img.png](screenshots/screenshot_6.png)
+![img.png](screenshots/screenshot_7.png)
+![img.png](screenshots/screenshot_8.png)
+- [Mobile-версія]
+![img.png](screenshots/screenshot_9.png)
+![img.png](screenshots/screenshot_10.png)
+![img.png](screenshots/screenshot_11.png)
+![img.png](screenshots/screenshot_12.png)
+![img.png](screenshots/screenshot_13.png)
 ---
 **Виконав:** Студент Максим
 **Рік:** 2026
