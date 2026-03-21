@@ -19,5 +19,18 @@ function init() {
  * Task 2: Highlight active page in navigation
  */
 function initActiveNav() {
-    // To be implemented in Task 2.1
+    const navLinks = document.querySelectorAll('.nav-list a');
+    const currentPath = window.location.pathname;
+    const currentPage = currentPath.split('/').pop() || 'index.html';
+
+    navLinks.forEach(link => {
+        const linkPage = link.getAttribute('href').split('/').pop();
+        
+        // Remove existing active class if any
+        link.classList.remove('active', 'is-active');
+        
+        if (linkPage === currentPage) {
+            link.classList.add('is-active');
+        }
+    });
 }
