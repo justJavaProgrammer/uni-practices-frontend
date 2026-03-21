@@ -253,7 +253,7 @@ audio {
     width: 100%;
     max-width: 400px;
     margin: 1rem 0;
-    filter: invert(100%) hue-rotate(240deg) brightness(1.2); /* Make audio controls look better in dark mode */
+    filter: invert(100%) hue-rotate(240deg) brightness(1.2);
 }
 
 /* Task 5.6: contact.html styling (Form, Inputs, Buttons) */
