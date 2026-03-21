@@ -7,8 +7,9 @@ function init() {
   initActiveNav();
   initMenuToggle();
   initThemeToggle();
+  initBackToTop();
+  updateFooterYear();
   // Future initializations will be added here
-  // initBackToTop();
   // initAccordion();
   // initFilters();
   // initModal();
@@ -16,8 +17,38 @@ function init() {
 }
 
 /**
- * Task 4: Light/Dark theme toggle
+ * Task 5.1: Back to Top button
  */
+function initBackToTop() {
+    const backToTopBtn = document.getElementById('back-to-top');
+
+    if (!backToTopBtn) return;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('is-visible');
+        } else {
+            backToTopBtn.classList.remove('is-visible');
+        }
+    });
+
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
+
+/**
+ * Task 5.2: Dynamic year in footer
+ */
+function updateFooterYear() {
+    const yearSpan = document.getElementById('current-year');
+    if (yearSpan) {
+        yearSpan.textContent = new Date().getFullYear();
+    }
+}
 function initThemeToggle() {
     const themeToggle = document.getElementById('theme-toggle');
     const body = document.body;
