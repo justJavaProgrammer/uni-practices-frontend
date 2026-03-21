@@ -22,12 +22,12 @@
 
 /* Tablets and Mobile */
 @media (max-width: 768px) {
+    .header-actions {
+        right: 16px;
+    }
+
     .menu-toggle {
         display: block;
-        position: absolute;
-        right: 20px;
-        top: 50%;
-        transform: translateY(-50%);
         padding-top: 15px;
     }
 

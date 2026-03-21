@@ -6,8 +6,8 @@ function init() {
   
   initActiveNav();
   initMenuToggle();
+  initThemeToggle();
   // Future initializations will be added here
-  // initThemeToggle();
   // initBackToTop();
   // initAccordion();
   // initFilters();
@@ -16,8 +16,32 @@ function init() {
 }
 
 /**
- * Task 3: Mobile menu toggle
+ * Task 4: Light/Dark theme toggle
  */
+function initThemeToggle() {
+    const themeToggle = document.getElementById('theme-toggle');
+    const body = document.body;
+    const themeKey = 'siteTheme';
+
+    // Check for saved theme in localStorage
+    const savedTheme = localStorage.getItem(themeKey);
+    if (savedTheme === 'light') {
+        body.classList.add('theme-light');
+    }
+
+    if (!themeToggle) return;
+
+    themeToggle.addEventListener('click', () => {
+        body.classList.toggle('theme-light');
+        
+        // Save theme preference
+        if (body.classList.contains('theme-light')) {
+            localStorage.setItem(themeKey, 'light');
+        } else {
+            localStorage.setItem(themeKey, 'dark');
+        }
+    });
+}
 function initMenuToggle() {
     const menuToggle = document.getElementById('menu-toggle');
     const navList = document.getElementById('nav-list');

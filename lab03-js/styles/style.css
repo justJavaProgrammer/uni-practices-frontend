@@ -9,6 +9,8 @@
     --color-text: #fafafa;
     --color-text-muted: #a1a1aa;
     --color-border: #27272a;
+    --color-btn-secondary: #27272a;
+    --color-btn-secondary-hover: #3f3f46;
     --container-width: 1100px;
     --border-radius: 12px;
     --transition-speed: 0.3s;
@@ -21,6 +23,17 @@
     box-sizing: border-box;
 }
 
+body.theme-light {
+    --color-bg: #f4f4f5;
+    --color-surface: #ffffff;
+    --color-text: #18181b;
+    --color-text-muted: #52525b;
+    --color-border: #e4e4e7;
+    --color-btn-secondary: #e4e4e7;
+    --color-btn-secondary-hover: #d4d4d8;
+    --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
 body {
     margin: 0;
     padding: 0;
@@ -31,6 +44,7 @@ body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    transition: background-color var(--transition-speed), color var(--transition-speed);
 }
 
 .container {
@@ -66,6 +80,7 @@ a:hover {
     border-radius: var(--border-radius);
     border: 1px solid var(--color-border);
     box-shadow: var(--shadow);
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
 }
 
 /* Task 5.3: Header, Navigation & Footer */
@@ -75,6 +90,7 @@ a:hover {
     color: white;
     padding: 1.25rem 0;
     border-bottom: 1px solid var(--color-border);
+    transition: background-color var(--transition-speed), border-color var(--transition-speed);
 }
 
 .site-nav {
@@ -83,13 +99,70 @@ a:hover {
     position: relative;
 }
 
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.theme-toggle,
 .menu-toggle {
-    display: none;
     background: none;
     border: none;
     cursor: pointer;
     padding: 10px;
     z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: background-color 0.3s;
+}
+
+.theme-toggle:hover,
+.menu-toggle:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+body.theme-light .theme-toggle:hover,
+body.theme-light .menu-toggle:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.theme-icon {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    position: relative;
+    background-color: transparent;
+    box-shadow: inset -6px -4px 0 0 var(--color-text);
+    transition: all 0.3s;
+}
+
+body.theme-light .theme-icon {
+    box-shadow: none;
+    background-color: var(--color-text);
+    transform: scale(0.6);
+}
+
+body.theme-light .theme-icon::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 26px;
+    height: 26px;
+    border: 2px dashed var(--color-text);
+    border-radius: 50%;
+}
+
+.menu-toggle {
+    display: none;
 }
 
 .hamburger {
@@ -395,12 +468,12 @@ legend {
 }
 
 .btn-secondary {
-    background-color: #27272a;
+    background-color: var(--color-btn-secondary);
     color: var(--color-text-muted);
 }
 
 .btn-secondary:hover {
-    background-color: #3f3f46;
+    background-color: var(--color-btn-secondary-hover);
     color: var(--color-text);
 }
 
