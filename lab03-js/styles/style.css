@@ -587,6 +587,41 @@ legend {
     margin-bottom: 0;
 }
 
+/* Task 6.7: Filters */
+.filters {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 0.6rem 1.2rem;
+    border: 1px solid var(--color-border);
+    background-color: var(--color-surface);
+    color: var(--color-text-muted);
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.875rem;
+    font-weight: 500;
+    transition: all 0.3s;
+}
+
+.filter-btn:hover {
+    border-color: var(--color-secondary);
+    color: var(--color-text);
+}
+
+.filter-btn.is-active {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: white;
+}
+
+.card[hidden] {
+    display: none;
+}
+
 
 
 

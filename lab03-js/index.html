@@ -32,7 +32,14 @@
         <h1>Мій перший HTML-сайт</h1>
         <p>Це моя перша практична робота з курсу <strong>Front-end розробки</strong>. Тут я вчуся основам HTML5 та семантичній розмітці.</p>
 
-        <section class="card">
+        <div class="filters">
+            <button class="filter-btn is-active" data-filter="all">Усі</button>
+            <button class="filter-btn" data-filter="info">Інфо</button>
+            <button class="filter-btn" data-filter="media">Медіа</button>
+            <button class="filter-btn" data-filter="schedule">Розклад</button>
+        </div>
+
+        <section class="card" data-category="info">
             <h2>Про цей проект</h2>
             <p>Проект складається з трьох сторінок, кожна з яких демонструє різні аспекти HTML. <em>Семантичність</em> є ключовим фактором при написанні коду.</p>
             <p>Нижче наведено списки моїх цілей на цей курс.</p>
@@ -54,7 +61,7 @@
             </ol>
         </section>
 
-        <section class="card">
+        <section class="card" data-category="media">
             <h2>Візуальний контент</h2>
             <figure>
                 <img src="assets/img/img1.jpg" alt="Моє перше фото на сайті" width="400">
@@ -62,7 +69,7 @@
             </figure>
         </section>
 
-        <section class="card">
+        <section class="card" data-category="schedule">
             <h2>Мій розклад занять</h2>
             <table>
                 <caption>Тижневий розклад Front-end курсу</caption>

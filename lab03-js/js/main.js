@@ -10,15 +10,40 @@ function init() {
   initBackToTop();
   updateFooterYear();
   initAccordion();
+  initFilters();
   // Future initializations will be added here
-  // initFilters();
   // initModal();
   // initContactForm();
 }
 
 /**
- * Task 6.1: Accordion
+ * Task 7.1: Content filters
  */
+function initFilters() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.card[data-category]');
+
+    if (filterButtons.length === 0) return;
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const filter = button.getAttribute('data-filter');
+
+            // Update active button
+            filterButtons.forEach(btn => btn.classList.remove('is-active'));
+            button.classList.add('is-active');
+
+            // Filter cards
+            cards.forEach(card => {
+                if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                    card.hidden = false;
+                } else {
+                    card.hidden = true;
+                }
+            });
+        });
+    });
+}
 function initAccordion() {
     const accordionHeaders = document.querySelectorAll('.accordion-header');
 
