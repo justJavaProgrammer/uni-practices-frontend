@@ -5,8 +5,8 @@ function init() {
   console.log('DOM fully loaded and parsed');
   
   initActiveNav();
+  initMenuToggle();
   // Future initializations will be added here
-  // initMenuToggle();
   // initThemeToggle();
   // initBackToTop();
   // initAccordion();
@@ -16,8 +16,29 @@ function init() {
 }
 
 /**
- * Task 2: Highlight active page in navigation
+ * Task 3: Mobile menu toggle
  */
+function initMenuToggle() {
+    const menuToggle = document.getElementById('menu-toggle');
+    const navList = document.getElementById('nav-list');
+
+    if (!menuToggle || !navList) return;
+
+    menuToggle.addEventListener('click', () => {
+        const isExpanded = menuToggle.getAttribute('aria-expanded') === 'true';
+        menuToggle.setAttribute('aria-expanded', !isExpanded);
+        navList.classList.toggle('is-open');
+    });
+
+    // Close menu when clicking a link (optional but recommended for SPA/smooth-scroll)
+    const navLinks = navList.querySelectorAll('a');
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            menuToggle.setAttribute('aria-expanded', 'false');
+            navList.classList.remove('is-open');
+        });
+    });
+}
 function initActiveNav() {
     const navLinks = document.querySelectorAll('.nav-list a');
     const currentPath = window.location.pathname;

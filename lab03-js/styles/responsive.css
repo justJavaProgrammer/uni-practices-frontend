@@ -22,14 +22,37 @@
 
 /* Tablets and Mobile */
 @media (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+        position: absolute;
+        right: 20px;
+        top: 50%;
+        transform: translateY(-50%);
+        padding-top: 15px;
+    }
+
     .nav-list {
+        display: none;
         flex-direction: column;
         gap: 10px;
         align-items: center;
+        width: 100%;
+        padding: 1rem 0;
+        background-color: var(--color-surface);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 999;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .nav-list.is-open {
+        display: flex;
     }
 
     .site-nav {
-        padding: 1rem 0;
+        justify-content: flex-start;
+        padding: 0.5rem 0;
     }
 
     .nav-list a {
