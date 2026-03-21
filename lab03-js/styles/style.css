@@ -1,0 +1,368 @@
+/* Task 5.2: Global Styles & Design System */
+
+:root {
+    --color-primary: #581c87;
+    --color-secondary: #9333ea;
+    --color-accent: #c084fc;
+    --color-bg: #09090b;
+    --color-surface: #18181b;
+    --color-text: #fafafa;
+    --color-text-muted: #a1a1aa;
+    --color-border: #27272a;
+    --container-width: 1100px;
+    --border-radius: 12px;
+    --transition-speed: 0.3s;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    color: var(--color-text);
+    background-color: var(--color-bg);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.container {
+    width: min(var(--container-width), calc(100% - 40px));
+    margin: 0 auto;
+}
+
+main {
+    flex: 1;
+    padding: 3rem 0;
+}
+
+h1, h2, h3, h4 {
+    color: var(--color-accent);
+    margin-top: 0;
+    letter-spacing: -0.02em;
+}
+
+a {
+    color: var(--color-secondary);
+    text-decoration: none;
+    transition: all var(--transition-speed);
+}
+
+a:hover {
+    color: var(--color-accent);
+}
+
+.card {
+    background-color: var(--color-surface);
+    padding: 2rem;
+    margin-bottom: 2rem;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+    box-shadow: var(--shadow);
+}
+
+/* Task 5.3: Header, Navigation & Footer */
+
+.site-header {
+    background-color: var(--color-surface);
+    color: white;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.site-nav {
+    display: flex;
+    justify-content: center;
+}
+
+.nav-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-list a {
+    color: var(--color-text-muted);
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    letter-spacing: 0.1em;
+    padding: 0.5rem 0.75rem;
+    border-radius: 6px;
+}
+
+.nav-list a:hover {
+    color: var(--color-text);
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.nav-list a.active {
+    color: var(--color-accent);
+    background-color: rgba(192, 132, 252, 0.1);
+}
+
+.site-footer {
+    background-color: var(--color-surface);
+    color: var(--color-text-muted);
+    padding: 3rem 0;
+    text-align: center;
+    border-top: 1px solid var(--color-border);
+}
+
+.site-footer p {
+    margin-bottom: 1.5rem;
+    font-size: 0.875rem;
+}
+
+.site-footer button {
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.site-footer button:hover {
+    background-color: var(--color-secondary);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+}
+
+/* Task 5.4: index.html styling (Typography, Lists, Images, Tables) */
+
+p {
+    margin-bottom: 1.5rem;
+    color: var(--color-text-muted);
+}
+
+ul:not(.nav-list), ol {
+    margin-bottom: 1.5rem;
+    padding-left: 2rem;
+    color: var(--color-text-muted);
+}
+
+li {
+    margin-bottom: 0.5rem;
+}
+
+figure {
+    margin: 2.5rem 0;
+    text-align: center;
+}
+
+figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--color-border);
+}
+
+figcaption {
+    margin-top: 1.25rem;
+    font-size: 0.875rem;
+    color: var(--color-text-muted);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 2.5rem 0;
+    background-color: var(--color-surface);
+    overflow: hidden;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--color-border);
+}
+
+table caption {
+    padding: 1.25rem;
+    font-weight: bold;
+    color: var(--color-accent);
+    text-align: left;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+th, td {
+    padding: 1rem 1.25rem;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+thead th {
+    background-color: var(--color-primary);
+    color: white;
+    font-weight: 600;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+tbody tr:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Task 5.5: about.html styling (Media and Flexbox layout) */
+
+.media-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    align-items: center;
+    text-align: center;
+}
+
+.video-container {
+    width: 100%;
+    max-width: 500px;
+    margin: 1rem auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow);
+    background: #000;
+    line-height: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid var(--color-border);
+}
+
+video {
+    width: 100%;
+    max-height: 500px;
+    height: auto;
+    display: block;
+    border-radius: var(--border-radius);
+}
+
+audio {
+    width: 100%;
+    max-width: 400px;
+    margin: 1rem 0;
+    filter: invert(100%) hue-rotate(240deg) brightness(1.2);
+}
+
+/* Task 5.6: contact.html styling (Form, Inputs, Buttons) */
+
+.contact-form {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.75rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    font-size: 0.875rem;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"],
+.form-group input[type="tel"],
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+    font-family: inherit;
+    background-color: rgba(255, 255, 255, 0.03);
+    color: var(--color-text);
+    transition: all var(--transition-speed);
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--color-secondary);
+    background-color: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 4px rgba(147, 51, 234, 0.15);
+}
+
+fieldset {
+    border: 1px solid var(--color-border);
+    border-radius: var(--border-radius);
+    padding: 1.5rem;
+    background-color: rgba(255, 255, 255, 0.02);
+}
+
+legend {
+    padding: 0 0.75rem;
+    font-weight: 600;
+    color: var(--color-accent);
+    font-size: 0.875rem;
+}
+
+.radio-label, .checkbox-group label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: normal;
+    cursor: pointer;
+    color: var(--color-text-muted);
+}
+
+.form-actions {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 2.5rem;
+}
+
+.btn {
+    padding: 0.875rem 1.75rem;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+    font-size: 0.9375rem;
+}
+
+.btn-primary {
+    background-color: var(--color-primary);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: var(--color-secondary);
+    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+}
+
+.btn-secondary {
+    background-color: #27272a;
+    color: var(--color-text-muted);
+}
+
+.btn-secondary:hover {
+    background-color: #3f3f46;
+    color: var(--color-text);
+}
+
+.btn:active {
+    transform: scale(0.98);
+}
+
+
+
+
