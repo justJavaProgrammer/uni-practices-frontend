@@ -33,6 +33,13 @@
         <p>Маєте запитання чи пропозиції? Будь ласка, заповніть форму нижче.</p>
 
         <section class="card">
+            <div id="contact-success" class="form-success" hidden>
+                <h2>Дякуємо, <span id="success-name"></span>!</h2>
+                <p>Ваше повідомлення успішно надіслано (імітація). Ось дані, які ми отримали:</p>
+                <ul id="success-data"></ul>
+                <button type="button" class="btn btn-primary" id="success-close">Надіслати ще раз</button>
+            </div>
+
             <form action="#" method="get" class="contact-form" id="contact-form" novalidate>
                 <h2>Форма зворотного зв'язку</h2>
 

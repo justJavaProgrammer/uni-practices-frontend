@@ -16,32 +16,76 @@ function init() {
 }
 
 /**
- * Task 9.1: Contact form validation and character counter
+ * Task 9.1 & 10.1: Contact form validation, character counter, and draft handling
  */
 function initContactForm() {
     const form = document.getElementById('contact-form');
+    const successBlock = document.getElementById('contact-success');
     if (!form) return;
 
+    const nameInput = document.getElementById('name');
+    const nameError = document.getElementById('name-error');
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('email-error');
     const messageInput = document.getElementById('message');
+    const messageError = document.getElementById('message-error');
     const charCounter = document.getElementById('char-counter');
+    const agreeInput = document.getElementById('agree');
+    const agreeError = document.getElementById('agree-error');
     const maxLength = messageInput?.getAttribute('maxlength') || 500;
 
-    // 1. Character counter
-    messageInput?.addEventListener('input', () => {
+    const draftKey = 'contactDraft';
+
+    // 1. Restore draft
+    const savedDraft = JSON.parse(localStorage.getItem(draftKey) || '{}');
+    if (savedDraft.name) nameInput.value = savedDraft.name;
+    if (savedDraft.email) emailInput.value = savedDraft.email;
+    if (savedDraft.message) {
+        messageInput.value = savedDraft.message;
+        updateCharCounter();
+    }
+
+    // 2. Save draft logic
+    const saveDraft = () => {
+        const draft = {
+            name: nameInput.value,
+            email: emailInput.value,
+            message: messageInput.value
+        };
+        localStorage.setItem(draftKey, JSON.stringify(draft));
+    };
+
+    function updateCharCounter() {
         const currentLength = messageInput.value.length;
         charCounter.textContent = `${currentLength} / ${maxLength}`;
-        
         if (currentLength >= maxLength) {
             charCounter.classList.add('limit-reached');
         } else {
             charCounter.classList.remove('limit-reached');
         }
+    }
+
+    // 3. Listeners for counter and draft
+    messageInput?.addEventListener('input', () => {
+        updateCharCounter();
+        saveDraft();
     });
 
-    // 2. Real-time validation
-    const validateField = (input, errorElement, validationFn, errorMessage) => {
+    nameInput?.addEventListener('input', () => {
+        validateField(nameInput, nameError, (val) => val.trim().length >= 2, 'Ім’я має містити принаймні 2 символи');
+        saveDraft();
+    });
+
+    emailInput?.addEventListener('input', () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        validateField(emailInput, emailError, (val) => emailRegex.test(val), 'Введіть коректну адресу email');
+        saveDraft();
+    });
+
+    // 4. Real-time validation helper
+    const validateField = (input, errorElement, validationFn, errorMessage, forceShow = false) => {
         const isValid = validationFn(input.value);
-        if (!isValid && input.value !== '') {
+        if (!isValid && (input.value !== '' || forceShow)) {
             input.classList.add('is-invalid');
             errorElement.textContent = errorMessage;
         } else {
@@ -51,31 +95,62 @@ function initContactForm() {
         return isValid;
     };
 
-    const nameInput = document.getElementById('name');
-    const nameError = document.getElementById('name-error');
-    const emailInput = document.getElementById('email');
-    const emailError = document.getElementById('email-error');
-    const messageError = document.getElementById('message-error');
-    const agreeInput = document.getElementById('agree');
-    const agreeError = document.getElementById('agree-error');
-
-    nameInput?.addEventListener('input', () => {
-        validateField(nameInput, nameError, (val) => val.trim().length >= 2, 'Ім’я має містити принаймні 2 символи');
-    });
-
-    emailInput?.addEventListener('input', () => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        validateField(emailInput, emailError, (val) => emailRegex.test(val), 'Введіть коректну адресу email');
-    });
-
-    messageInput?.addEventListener('input', () => {
-        validateField(messageInput, messageError, (val) => val.trim() !== '', 'Повідомлення не може бути порожнім');
-    });
-
     agreeInput?.addEventListener('change', () => {
         if (agreeInput.checked) {
             agreeError.textContent = '';
         }
+    });
+
+    // 5. Form submission
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        // Final validation
+        const isNameValid = validateField(nameInput, nameError, (val) => val.trim().length >= 2, 'Ім’я обов’язкове (мін. 2 символи)', true);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isEmailValid = validateField(emailInput, emailError, (val) => emailRegex.test(val), 'Введіть коректну адресу email', true);
+        const isMessageValid = validateField(messageInput, messageError, (val) => val.trim() !== '', 'Повідомлення не може бути порожнім', true);
+        
+        if (!agreeInput.checked) {
+            agreeError.textContent = 'Ви повинні погодитися з умовами';
+        } else {
+            agreeError.textContent = '';
+        }
+
+        if (isNameValid && isEmailValid && isMessageValid && agreeInput.checked) {
+            const formData = new FormData(form);
+            // Ensure we get topic name not just value if needed, but value is fine
+            const data = Object.fromEntries(formData.entries());
+
+            // Show success message
+            document.getElementById('success-name').textContent = nameInput.value;
+            const successDataList = document.getElementById('success-data');
+            
+            const topicSelect = document.getElementById('topic');
+            const topicText = topicSelect.options[topicSelect.selectedIndex].text;
+
+            successDataList.innerHTML = `
+                <li><strong>Email:</strong> ${emailInput.value}</li>
+                <li><strong>Тема:</strong> ${topicText}</li>
+                <li><strong>Повідомлення:</strong> ${messageInput.value}</li>
+            `;
+
+            form.hidden = true;
+            successBlock.hidden = false;
+
+            // Clear draft
+            localStorage.removeItem(draftKey);
+            form.reset();
+            updateCharCounter();
+            
+            // Scroll to success message
+            successBlock.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+
+    document.getElementById('success-close')?.addEventListener('click', () => {
+        successBlock.hidden = true;
+        form.hidden = false;
     });
 }
 function initModal() {
