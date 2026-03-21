@@ -220,19 +220,26 @@ tbody tr:hover {
 
 .video-container {
     width: 100%;
-    max-width: 800px;
+    max-width: 500px;
+    max-height: 500px;
     margin: 1rem auto;
     border-radius: var(--border-radius);
     overflow: hidden;
     box-shadow: var(--shadow);
     background: #000;
     line-height: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 video {
-    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
     height: auto;
     display: block;
+    object-fit: contain;
 }
 
 audio {
