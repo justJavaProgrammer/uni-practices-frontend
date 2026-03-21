@@ -12,13 +12,72 @@ function init() {
   initAccordion();
   initFilters();
   initModal();
-  // Future initializations will be added here
-  // initContactForm();
+  initContactForm();
 }
 
 /**
- * Task 8.1: Modal window / Lightbox
+ * Task 9.1: Contact form validation and character counter
  */
+function initContactForm() {
+    const form = document.getElementById('contact-form');
+    if (!form) return;
+
+    const messageInput = document.getElementById('message');
+    const charCounter = document.getElementById('char-counter');
+    const maxLength = messageInput?.getAttribute('maxlength') || 500;
+
+    // 1. Character counter
+    messageInput?.addEventListener('input', () => {
+        const currentLength = messageInput.value.length;
+        charCounter.textContent = `${currentLength} / ${maxLength}`;
+        
+        if (currentLength >= maxLength) {
+            charCounter.classList.add('limit-reached');
+        } else {
+            charCounter.classList.remove('limit-reached');
+        }
+    });
+
+    // 2. Real-time validation
+    const validateField = (input, errorElement, validationFn, errorMessage) => {
+        const isValid = validationFn(input.value);
+        if (!isValid && input.value !== '') {
+            input.classList.add('is-invalid');
+            errorElement.textContent = errorMessage;
+        } else {
+            input.classList.remove('is-invalid');
+            errorElement.textContent = '';
+        }
+        return isValid;
+    };
+
+    const nameInput = document.getElementById('name');
+    const nameError = document.getElementById('name-error');
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('email-error');
+    const messageError = document.getElementById('message-error');
+    const agreeInput = document.getElementById('agree');
+    const agreeError = document.getElementById('agree-error');
+
+    nameInput?.addEventListener('input', () => {
+        validateField(nameInput, nameError, (val) => val.trim().length >= 2, 'Ім’я має містити принаймні 2 символи');
+    });
+
+    emailInput?.addEventListener('input', () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        validateField(emailInput, emailError, (val) => emailRegex.test(val), 'Введіть коректну адресу email');
+    });
+
+    messageInput?.addEventListener('input', () => {
+        validateField(messageInput, messageError, (val) => val.trim() !== '', 'Повідомлення не може бути порожнім');
+    });
+
+    agreeInput?.addEventListener('change', () => {
+        if (agreeInput.checked) {
+            agreeError.textContent = '';
+        }
+    });
+}
 function initModal() {
     const modal = document.getElementById('modal');
     const modalContent = document.getElementById('modal-content');

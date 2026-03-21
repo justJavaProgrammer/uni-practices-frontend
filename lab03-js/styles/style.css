@@ -703,6 +703,37 @@ body.modal-open {
     overflow: hidden;
 }
 
+/* Task 6.9: Form Validation & Counter */
+.error-message {
+    color: #ef4444;
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    display: block;
+    min-height: 1rem;
+}
+
+.form-group input.is-invalid,
+.form-group textarea.is-invalid {
+    border-color: #ef4444;
+    background-color: rgba(239, 68, 68, 0.05);
+}
+
+.textarea-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.char-counter {
+    font-size: 0.75rem;
+    color: var(--color-text-muted);
+    margin-top: 0.5rem;
+}
+
+.char-counter.limit-reached {
+    color: #ef4444;
+}
+
 
 
 
