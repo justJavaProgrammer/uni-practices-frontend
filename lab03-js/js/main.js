@@ -11,14 +11,58 @@ function init() {
   updateFooterYear();
   initAccordion();
   initFilters();
+  initModal();
   // Future initializations will be added here
-  // initModal();
   // initContactForm();
 }
 
 /**
- * Task 7.1: Content filters
+ * Task 8.1: Modal window / Lightbox
  */
+function initModal() {
+    const modal = document.getElementById('modal');
+    const modalContent = document.getElementById('modal-content');
+    const modalClose = document.getElementById('modal-close');
+    const modalOverlay = document.getElementById('modal-overlay');
+    const lightboxTriggers = document.querySelectorAll('.js-lightbox');
+
+    if (!modal || !modalContent) return;
+
+    const openModal = (content) => {
+        modalContent.innerHTML = content;
+        modal.classList.add('is-open');
+        modal.setAttribute('aria-hidden', 'false');
+        document.body.classList.add('modal-open');
+    };
+
+    const closeModal = () => {
+        modal.classList.remove('is-open');
+        modal.setAttribute('aria-hidden', 'true');
+        document.body.classList.remove('modal-open');
+        // Clear content after animation
+        setTimeout(() => {
+            modalContent.innerHTML = '';
+        }, 300);
+    };
+
+    lightboxTriggers.forEach(trigger => {
+        trigger.addEventListener('click', () => {
+            const imgSrc = trigger.getAttribute('src');
+            const imgAlt = trigger.getAttribute('alt');
+            openModal(`<img src="${imgSrc}" alt="${imgAlt}">`);
+        });
+    });
+
+    modalClose?.addEventListener('click', closeModal);
+    modalOverlay?.addEventListener('click', closeModal);
+
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+            closeModal();
+        }
+    });
+}
 function initFilters() {
     const filterButtons = document.querySelectorAll('.filter-btn');
     const cards = document.querySelectorAll('.card[data-category]');

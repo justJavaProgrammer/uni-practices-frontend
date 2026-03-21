@@ -64,8 +64,8 @@
         <section class="card" data-category="media">
             <h2>Візуальний контент</h2>
             <figure>
-                <img src="assets/img/img1.jpg" alt="Моє перше фото на сайті" width="400">
-                <figcaption>Приклад вставленого зображення через тег figure</figcaption>
+                <img src="assets/img/img1.jpg" alt="Моє перше фото на сайті" width="400" class="js-lightbox" style="cursor: zoom-in;">
+                <figcaption>Приклад вставленого зображення через тег figure (клікніть, щоб збільшити)</figcaption>
             </figure>
         </section>
 
@@ -107,6 +107,18 @@
             <button id="bonus-btn">Натисни мене (JS Bonus)</button>
         </div>
     </footer>
+
+    <!-- Modal structure -->
+    <div id="modal" class="modal" aria-hidden="true" role="dialog">
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal-container">
+            <button class="modal-close" id="modal-close" aria-label="Закрити модальне вікно">&times;</button>
+            <div class="modal-content" id="modal-content">
+                <!-- Content will be injected by JS -->
+            </div>
+        </div>
+    </div>
+
     <button id="back-to-top" class="back-to-top" aria-label="Повернутися вгору">
         <span class="arrow-up"></span>
     </button>
