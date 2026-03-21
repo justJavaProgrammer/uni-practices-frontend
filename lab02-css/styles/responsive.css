@@ -1,0 +1,84 @@
+/* Task 5.7: Responsive Design */
+
+/* Desktop & Tablets */
+@media (min-width: 769px) {
+    .media-section {
+        flex-direction: row;
+        text-align: left;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .media-content {
+        flex: 1;
+    }
+
+    .media-section .video-container,
+    .media-section audio {
+        flex: 1.5;
+        margin: 0;
+    }
+}
+
+/* Tablets and Mobile */
+@media (max-width: 768px) {
+    .nav-list {
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+    }
+
+    .site-nav {
+        padding: 1rem 0;
+    }
+
+    .nav-list a {
+        width: 100%;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .site-header {
+        padding: 0.5rem 0;
+    }
+
+    .nav-list {
+        gap: 5px;
+    }
+
+    .nav-list a {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+}
