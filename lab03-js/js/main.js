@@ -9,16 +9,36 @@ function init() {
   initThemeToggle();
   initBackToTop();
   updateFooterYear();
+  initAccordion();
   // Future initializations will be added here
-  // initAccordion();
   // initFilters();
   // initModal();
   // initContactForm();
 }
 
 /**
- * Task 5.1: Back to Top button
+ * Task 6.1: Accordion
  */
+function initAccordion() {
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const currentItem = header.parentElement;
+            const isActive = currentItem.classList.contains('is-active');
+
+            // Close all other items (optional, but looks cleaner)
+            document.querySelectorAll('.accordion-item').forEach(item => {
+                item.classList.remove('is-active');
+            });
+
+            // Toggle current item
+            if (!isActive) {
+                currentItem.classList.add('is-active');
+            }
+        });
+    });
+}
 function initBackToTop() {
     const backToTopBtn = document.getElementById('back-to-top');
 

@@ -522,6 +522,71 @@ legend {
     margin-top: 5px;
 }
 
+/* Task 6.6: Accordion */
+.accordion {
+    margin: 1.5rem 0;
+}
+
+.accordion-item {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.accordion-header {
+    width: 100%;
+    padding: 1.25rem 1.5rem;
+    background-color: rgba(255, 255, 255, 0.02);
+    border: none;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    color: var(--color-text);
+    font-weight: 600;
+    font-size: 1rem;
+    transition: background-color 0.3s;
+    text-align: left;
+}
+
+.accordion-header:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.accordion-icon {
+    width: 12px;
+    height: 12px;
+    border-bottom: 2px solid var(--color-text-muted);
+    border-right: 2px solid var(--color-text-muted);
+    transform: rotate(45deg);
+    transition: transform 0.3s;
+    margin-bottom: 5px;
+}
+
+.accordion-item.is-active .accordion-icon {
+    transform: rotate(-135deg);
+    margin-bottom: -5px;
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out, padding 0.3s;
+    background-color: transparent;
+    padding: 0 1.5rem;
+}
+
+.accordion-item.is-active .accordion-content {
+    max-height: 500px; /* Adjust as needed */
+    padding: 1.5rem;
+    border-top: 1px solid var(--color-border);
+}
+
+.accordion-content p {
+    margin-bottom: 0;
+}
+
 
 
 
