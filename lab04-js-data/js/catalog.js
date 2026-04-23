@@ -30,6 +30,50 @@ export function renderCatalog(items) {
 }
 
 /**
+ * Filter and sort items based on user criteria
+ * @param {Array} items - Original array of items
+ * @param {Object} criteria - Search, category, and sort criteria
+ * @returns {Array} - Filtered and sorted array
+ */
+export function filterAndSortItems(items, { search, category, sortBy }) {
+    let result = [...items];
+
+    // Filter by search
+    if (search) {
+        const query = search.toLowerCase();
+        result = result.filter(item => 
+            item.title.toLowerCase().includes(query) || 
+            item.description.toLowerCase().includes(query)
+        );
+    }
+
+    // Filter by category
+    if (category && category !== 'all') {
+        result = result.filter(item => item.category === category);
+    }
+
+    // Sort items
+    if (sortBy && sortBy !== 'default') {
+        switch (sortBy) {
+            case 'price-asc':
+                result.sort((a, b) => a.price - b.price);
+                break;
+            case 'price-desc':
+                result.sort((a, b) => b.price - a.price);
+                break;
+            case 'rating-desc':
+                result.sort((a, b) => b.rating - a.rating);
+                break;
+            case 'title-asc':
+                result.sort((a, b) => a.title.localeCompare(b.title));
+                break;
+        }
+    }
+
+    return result;
+}
+
+/**
  * Create a single course card element
  * @param {Object} item - Course object
  * @returns {HTMLElement} - The card element
