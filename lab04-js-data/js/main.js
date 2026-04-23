@@ -3,6 +3,9 @@ import { renderCatalog, filterAndSortItems } from './catalog.js';
 import { toggleFavorite } from './favorites.js';
 
 let allItems = [];
+let filteredItems = [];
+let visibleCount = 6;
+const ITEMS_PER_PAGE = 6;
 
 const elements = {
     catalogContainer: document.getElementById('catalog-container'),
@@ -12,6 +15,11 @@ const elements = {
     searchInput: document.getElementById('catalog-search'),
     categoryFilter: document.getElementById('category-filter'),
     sortSelect: document.getElementById('sort-select'),
+    showMoreBtn: document.getElementById('show-more-btn'),
+    modal: document.getElementById('modal'),
+    modalContent: document.getElementById('modal-content'),
+    modalClose: document.getElementById('modal-close'),
+    modalOverlay: document.getElementById('modal-overlay'),
 };
 
 /**
@@ -24,6 +32,7 @@ async function init() {
     if (elements.catalogContainer) {
         await initCatalog();
         initCatalogControls();
+        initModal();
     }
 }
 
@@ -40,7 +49,7 @@ async function initCatalog() {
             showState('empty');
         } else {
             showState('success');
-            updateCatalog();
+            updateCatalog(true);
         }
     } catch (error) {
         showState('error');
@@ -53,9 +62,13 @@ async function initCatalog() {
 function initCatalogControls() {
     if (!elements.searchInput) return;
 
-    elements.searchInput.addEventListener('input', updateCatalog);
-    elements.categoryFilter.addEventListener('change', updateCatalog);
-    elements.sortSelect.addEventListener('change', updateCatalog);
+    elements.searchInput.addEventListener('input', () => updateCatalog(true));
+    elements.categoryFilter.addEventListener('change', () => updateCatalog(true));
+    elements.sortSelect.addEventListener('change', () => updateCatalog(true));
+    
+    if (elements.showMoreBtn) {
+        elements.showMoreBtn.addEventListener('click', handleShowMore);
+    }
 
     // Event delegation for favorites and details
     elements.catalogContainer.addEventListener('click', (e) => {
@@ -73,24 +86,70 @@ function initCatalogControls() {
         if (detailsBtn) {
             const card = detailsBtn.closest('.course-card');
             const id = parseInt(card.getAttribute('data-id'));
-            console.log('Details for item:', id);
-            // Modal/Details logic will be added in Phase 6
+            showItemDetails(id);
+        }
+    });
+}
+
+/**
+ * Initialize Modal events
+ */
+function initModal() {
+    if (!elements.modalClose) return;
+
+    elements.modalClose.addEventListener('click', closeModal);
+    elements.modalOverlay.addEventListener('click', closeModal);
+    
+    // Close on Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && elements.modal.classList.contains('is-open')) {
+            closeModal();
         }
     });
 }
 
 /**
  * Update catalog based on current search, filter, and sort values
+ * @param {boolean} resetCount - Whether to reset visible items count to initial
  */
-function updateCatalog() {
+function updateCatalog(resetCount = false) {
+    if (resetCount) {
+        visibleCount = ITEMS_PER_PAGE;
+    }
+
     const criteria = {
         search: elements.searchInput.value,
         category: elements.categoryFilter.value,
         sortBy: elements.sortSelect.value,
     };
 
-    const filteredItems = filterAndSortItems(allItems, criteria);
-    renderCatalog(filteredItems);
+    filteredItems = filterAndSortItems(allItems, criteria);
+    
+    const itemsToRender = filteredItems.slice(0, visibleCount);
+    renderCatalog(itemsToRender);
+    
+    updateShowMoreButton();
+}
+
+/**
+ * Handle "Show More" button click
+ */
+function handleShowMore() {
+    visibleCount += ITEMS_PER_PAGE;
+    updateCatalog();
+}
+
+/**
+ * Update visibility of "Show More" button
+ */
+function updateShowMoreButton() {
+    if (!elements.showMoreBtn) return;
+    
+    if (filteredItems.length > visibleCount) {
+        elements.showMoreBtn.classList.remove('is-hidden');
+    } else {
+        elements.showMoreBtn.classList.add('is-hidden');
+    }
 }
 
 /**
@@ -109,6 +168,47 @@ function showState(state) {
     } else if (state === 'empty') {
         elements.emptyState.classList.remove('is-hidden');
     }
+}
+
+/**
+ * Show item details in modal
+ * @param {number} id 
+ */
+function showItemDetails(id) {
+    const item = allItems.find(i => i.id === id);
+    if (!item) return;
+
+    elements.modalContent.innerHTML = `
+        <div class="modal-details">
+            <img src="${item.image}" alt="${item.title}" class="modal-image">
+            <div class="modal-info">
+                <span class="course-category">${item.category}</span>
+                <h2 class="modal-title">${item.title}</h2>
+                <div class="modal-meta">
+                    <span class="meta-item"><strong>Рівень:</strong> ${item.level}</span>
+                    <span class="meta-item"><strong>Рейтинг:</strong> ⭐ ${item.rating}</span>
+                </div>
+                <p class="modal-description">${item.description}</p>
+                <div class="modal-footer">
+                    <span class="modal-price">$${item.price}</span>
+                    <button class="btn btn-primary" onclick="alert('Дякуємо за покупку!')">Записатися на курс</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    elements.modal.classList.add('is-open');
+    elements.modal.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('modal-open');
+}
+
+/**
+ * Close modal
+ */
+function closeModal() {
+    elements.modal.classList.remove('is-open');
+    elements.modal.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('modal-open');
 }
 
 // Start application
