@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Головна сторінка мого першого HTML-сайту, створеного в межах практичної роботи.">
+    <title>Мій перший HTML-сайт - Головна</title>
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/responsive.css">
+    <script src="js/main.js" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="site-nav container">
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Змінити тему">
+                    <span class="theme-icon"></span>
+                </button>
+                <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-label="Відкрити меню">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+            <ul class="nav-list" id="nav-list">
+                <li><a href="index.html" class="active">Головна</a></li>
+                <li><a href="pages/about.html">Про мене</a></li>
+                <li><a href="pages/contact.html">Контакти</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>Мій перший HTML-сайт</h1>
+        <p>Це моя перша практична робота з курсу <strong>Front-end розробки</strong>. Тут я вчуся основам HTML5 та семантичній розмітці.</p>
+
+        <div class="filters">
+            <button class="filter-btn is-active" data-filter="all">Усі</button>
+            <button class="filter-btn" data-filter="info">Інфо</button>
+            <button class="filter-btn" data-filter="media">Медіа</button>
+            <button class="filter-btn" data-filter="schedule">Розклад</button>
+        </div>
+
+        <section class="card" data-category="info">
+            <h2>Про цей проект</h2>
+            <p>Проект складається з трьох сторінок, кожна з яких демонструє різні аспекти HTML. <em>Семантичність</em> є ключовим фактором при написанні коду.</p>
+            <p>Нижче наведено списки моїх цілей на цей курс.</p>
+
+            <h3>Мої цілі (Маркований список)</h3>
+            <ul>
+                <li>Вивчити основи HTML та CSS</li>
+                <li>Навчитися працювати з формами</li>
+                <li>Зрозуміти принципи адаптивного дизайну</li>
+                <li>Опанувати базовий JavaScript</li>
+            </ul>
+
+            <h3>Етапи навчання (Нумерований список)</h3>
+            <ol>
+                <li>Вивчення структури документа</li>
+                <li>Робота з контентом та медіа</li>
+                <li>Створення складних форм</li>
+                <li>Фінальний проект</li>
+            </ol>
+        </section>
+
+        <section class="card" data-category="media">
+            <h2>Візуальний контент</h2>
+            <figure>
+                <img src="assets/img/img1.jpg" alt="Моє перше фото на сайті" width="400" class="js-lightbox" style="cursor: zoom-in;">
+                <figcaption>Приклад вставленого зображення через тег figure (клікніть, щоб збільшити)</figcaption>
+            </figure>
+        </section>
+
+        <section class="card" data-category="schedule">
+            <h2>Мій розклад занять</h2>
+            <table>
+                <caption>Тижневий розклад Front-end курсу</caption>
+                <thead>
+                    <tr>
+                        <th>День</th>
+                        <th>Час</th>
+                        <th>Тема</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Понеділок</td>
+                        <td>10:00 - 12:00</td>
+                        <td>Основи HTML</td>
+                    </tr>
+                    <tr>
+                        <td>Середа</td>
+                        <td>14:00 - 16:00</td>
+                        <td>Стилізація CSS</td>
+                    </tr>
+                    <tr>
+                        <td>П'ятниця</td>
+                        <td>09:00 - 11:00</td>
+                        <td>Практичне заняття</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="current-year">2026</span> Студент Максим. Всі права захищені.</p>
+            <button id="bonus-btn">Натисни мене (JS Bonus)</button>
+        </div>
+    </footer>
+
+    <!-- Modal structure -->
+    <div id="modal" class="modal" aria-hidden="true" role="dialog">
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal-container">
+            <button class="modal-close" id="modal-close" aria-label="Закрити модальне вікно">&times;</button>
+            <div class="modal-content" id="modal-content">
+                <!-- Content will be injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <button id="back-to-top" class="back-to-top" aria-label="Повернутися вгору">
+        <span class="arrow-up"></span>
+    </button>
+</body>
+</html>

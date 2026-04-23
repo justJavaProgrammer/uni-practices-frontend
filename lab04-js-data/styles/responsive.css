@@ -1,0 +1,108 @@
+/* Task 5.7: Responsive Design */
+
+/* Desktop & Tablets */
+@media (min-width: 769px) {
+    .media-section {
+        flex-direction: row;
+        text-align: left;
+        align-items: center;
+        gap: 2rem;
+    }
+
+    .media-content {
+        flex: 1;
+    }
+
+    .media-section .video-container,
+    .media-section audio {
+        flex: 1.5;
+        margin: 0;
+    }
+}
+
+/* Tablets and Mobile */
+@media (max-width: 768px) {
+    .header-actions {
+        right: 16px;
+        z-index: 1001; /* Ensure it stays above the nav-list */
+    }
+
+    .menu-toggle {
+        display: block;
+        padding-top: 15px;
+    }
+
+    .nav-list {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+        align-items: center;
+        width: 100%;
+        padding: 2rem 0; /* Increased padding */
+        background-color: var(--color-surface);
+        position: absolute;
+        top: 100%;
+        left: 0;
+        z-index: 999;
+        border-bottom: 1px solid var(--color-border);
+    }
+
+    .nav-list.is-open {
+        display: flex;
+    }
+
+    .site-nav {
+        justify-content: flex-start;
+        padding: 1.5rem 0; /* Increased padding */
+    }
+
+    .nav-list a {
+        width: 100%;
+        text-align: center;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    .container {
+        padding: 0 16px;
+    }
+
+    .card {
+        padding: 16px;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn {
+        width: 100%;
+    }
+}
+
+/* Small Mobile */
+@media (max-width: 480px) {
+    .site-header {
+        padding: 1rem 0;
+    }
+
+    .nav-list {
+        gap: 5px;
+    }
+
+    .nav-list a {
+        font-size: 0.8rem;
+        padding: 6px 10px;
+    }
+}
