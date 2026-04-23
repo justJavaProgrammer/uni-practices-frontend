@@ -2,20 +2,17 @@ import { getItems, deleteItem } from './api.js';
 import { showLoading, showError, showEmpty, showStatus } from './ui.js';
 
 let currentParams = {
-    q: '',
+    title_like: '', // Using title_like for more reliable search in json-server
     category: '',
     _sort: 'id',
     _page: 1,
-    _limit: 6
+    _per_page: 6
 };
 
 export async function initCatalog() {
     console.log('Catalog initialization started');
     const catalogContainer = document.getElementById('catalog-container');
-    if (!catalogContainer) {
-        console.error('Catalog container not found');
-        return;
-    }
+    if (!catalogContainer) return;
 
     setupFilters();
     await loadAndRenderItems();
@@ -28,7 +25,7 @@ function setupFilters() {
 
     if (searchInput) {
         searchInput.addEventListener('input', debounce(async (e) => {
-            currentParams.q = e.target.value;
+            currentParams.title_like = e.target.value;
             currentParams._page = 1;
             await loadAndRenderItems();
         }, 500));
@@ -45,14 +42,12 @@ function setupFilters() {
     if (sortFilter) {
         sortFilter.addEventListener('change', async (e) => {
             const value = e.target.value;
-            // json-server v1 uses -prefix for descending order
-            if (value.endsWith('-desc')) {
-                currentParams._sort = '-' + value.replace('-desc', '');
-            } else if (value.endsWith('-asc')) {
-                currentParams._sort = value.replace('-asc', '');
-            } else {
-                currentParams._sort = value;
-            }
+            if (value === 'id-asc') currentParams._sort = 'id';
+            else if (value === 'id-desc') currentParams._sort = '-id';
+            else if (value === 'price-asc') currentParams._sort = 'price';
+            else if (value === 'price-desc') currentParams._sort = '-price';
+            else if (value === 'rating-desc') currentParams._sort = '-rating';
+            
             currentParams._page = 1;
             await loadAndRenderItems();
         });
@@ -68,10 +63,9 @@ async function loadAndRenderItems() {
         console.log('Fetching items with query:', queryString);
         const { items, totalCount } = await getItems(queryString);
         
-        console.log('Processed items:', items);
+        console.log('Processed items count:', items.length);
         
         if (items.length === 0) {
-            console.log('No items found for current params');
             showEmpty(catalogContainer);
             renderPagination(0);
             return;
@@ -155,7 +149,7 @@ function renderPagination(totalCount) {
     const paginationContainer = document.getElementById('pagination-container');
     if (!paginationContainer) return;
 
-    const totalPages = Math.ceil(totalCount / currentParams._limit);
+    const totalPages = Math.ceil(totalCount / currentParams._per_page);
     paginationContainer.innerHTML = '';
 
     if (totalPages <= 1) return;
