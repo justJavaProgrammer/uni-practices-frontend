@@ -1,4 +1,5 @@
 import { initCatalog } from './catalog.js';
+import { initForm } from './form.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     // Check which page we are on
@@ -6,5 +7,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     if (path.includes('catalog.html')) {
         initCatalog();
+    } else if (path.includes('item-form.html')) {
+        initForm();
     }
 });
