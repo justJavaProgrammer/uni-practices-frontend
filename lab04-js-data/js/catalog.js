@@ -1,6 +1,7 @@
 /**
  * Catalog module for rendering and managing items
  */
+import { isFavorited } from './favorites.js';
 
 /**
  * Render all items into the catalog container
@@ -84,6 +85,8 @@ function createCourseCard(item) {
     card.setAttribute('data-id', item.id);
     card.setAttribute('data-category', item.category);
 
+    const activeClass = isFavorited(item.id) ? 'is-active' : '';
+
     card.innerHTML = `
         <img src="${item.image}" alt="${item.title}" class="course-image">
         <div class="course-content">
@@ -93,7 +96,7 @@ function createCourseCard(item) {
             <div class="course-footer">
                 <span class="course-price">$${item.price}</span>
                 <div class="course-actions">
-                    <button class="btn btn-secondary btn-fav" title="Додати в обране">
+                    <button class="btn btn-secondary btn-fav ${activeClass}" title="Додати в обране">
                         <span class="heart-icon">❤</span>
                     </button>
                     <button class="btn btn-primary btn-details">Деталі</button>

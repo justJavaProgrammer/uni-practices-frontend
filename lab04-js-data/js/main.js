@@ -1,5 +1,6 @@
 import { loadItems } from './api.js';
 import { renderCatalog, filterAndSortItems } from './catalog.js';
+import { toggleFavorite } from './favorites.js';
 
 let allItems = [];
 
@@ -55,6 +56,27 @@ function initCatalogControls() {
     elements.searchInput.addEventListener('input', updateCatalog);
     elements.categoryFilter.addEventListener('change', updateCatalog);
     elements.sortSelect.addEventListener('change', updateCatalog);
+
+    // Event delegation for favorites and details
+    elements.catalogContainer.addEventListener('click', (e) => {
+        const favBtn = e.target.closest('.btn-fav');
+        if (favBtn) {
+            const card = favBtn.closest('.course-card');
+            const id = parseInt(card.getAttribute('data-id'));
+            
+            toggleFavorite(id);
+            favBtn.classList.toggle('is-active');
+            return;
+        }
+
+        const detailsBtn = e.target.closest('.btn-details');
+        if (detailsBtn) {
+            const card = detailsBtn.closest('.course-card');
+            const id = parseInt(card.getAttribute('data-id'));
+            console.log('Details for item:', id);
+            // Modal/Details logic will be added in Phase 6
+        }
+    });
 }
 
 /**
