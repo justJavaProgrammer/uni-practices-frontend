@@ -173,9 +173,13 @@ function showItemDetails(id) {
     const item = allItems.find(i => i.id === id);
     if (!item || !elements.modalContent) return;
 
+    // Adjust image path for subpages
+    const isSubPage = window.location.pathname.includes('/pages/');
+    const imagePath = isSubPage ? `../${item.image}` : item.image;
+
     elements.modalContent.innerHTML = `
         <div class="modal-details">
-            <img src="${item.image}" alt="${item.title}" class="modal-image">
+            <img src="${imagePath}" alt="${item.title}" class="modal-image">
             <div class="modal-info">
                 <span class="course-category">${item.category}</span>
                 <h2 class="modal-title">${item.title}</h2>
