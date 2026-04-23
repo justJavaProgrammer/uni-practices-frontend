@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Каталог курсів Front-end - динамічне завантаження даних.">
+    <title>Мій перший HTML-сайт - Каталог</title>
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../styles/responsive.css">
+    <script src="../js/main.js" type="module" defer></script>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="site-nav container">
+            <div class="header-actions">
+                <button class="theme-toggle" id="theme-toggle" aria-label="Змінити тему">
+                    <span class="theme-icon"></span>
+                </button>
+                <button class="menu-toggle" id="menu-toggle" aria-expanded="false" aria-label="Відкрити меню">
+                    <span class="hamburger"></span>
+                </button>
+            </div>
+            <ul class="nav-list" id="nav-list">
+                <li><a href="../index.html">Головна</a></li>
+                <li><a href="catalog.html" class="active">Каталог</a></li>
+                <li><a href="about.html">Про мене</a></li>
+                <li><a href="contact.html">Контакти</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1>Каталог курсів Front-end</h1>
+        <p>Це динамічний каталог курсів, де дані завантажуються асинхронно. Ви можете шукати, фільтрувати та сортувати курси.</p>
+
+        <section class="catalog-controls">
+            <div class="search-box">
+                <input type="text" id="catalog-search" placeholder="Пошук курсів...">
+            </div>
+            
+            <div class="filter-group">
+                <label for="category-filter">Категорія:</label>
+                <select id="category-filter">
+                    <option value="all">Усі категорії</option>
+                    <option value="Frontend">Frontend</option>
+                    <option value="Programming">Programming</option>
+                    <option value="Design">Design</option>
+                    <option value="Backend">Backend</option>
+                    <option value="Performance">Performance</option>
+                </select>
+            </div>
+
+            <div class="sort-group">
+                <label for="sort-select">Сортувати:</label>
+                <select id="sort-select">
+                    <option value="default">За замовчуванням</option>
+                    <option value="price-asc">Ціна (низька > висока)</option>
+                    <option value="price-desc">Ціна (висока > низька)</option>
+                    <option value="rating-desc">Рейтинг (найвищий)</option>
+                    <option value="title-asc">Назва (А-Я)</option>
+                </select>
+            </div>
+        </section>
+
+        <div id="catalog-status" class="catalog-status">
+            <div id="loading-state" class="status-message is-hidden">
+                <div class="loader"></div>
+                <p>Завантаження курсів...</p>
+            </div>
+            <div id="error-state" class="status-message is-hidden">
+                <p class="error-text">Помилка завантаження даних. Спробуйте пізніше.</p>
+            </div>
+            <div id="empty-state" class="status-message is-hidden">
+                <p>Нічого не знайдено за вашим запитом.</p>
+            </div>
+        </div>
+
+        <div id="catalog-container" class="catalog-grid" data-catalog>
+            <!-- Картки будуть згенеровані JavaScript -->
+        </div>
+
+        <div class="pagination-container">
+            <button id="show-more-btn" class="btn btn-secondary is-hidden">Показати ще</button>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <p>&copy; <span id="current-year">2026</span> Студент Максим. Всі права захищені.</p>
+            <button id="bonus-btn">Натисни мене (JS Bonus)</button>
+        </div>
+    </footer>
+
+    <!-- Modal structure -->
+    <div id="modal" class="modal" aria-hidden="true" role="dialog">
+        <div class="modal-overlay" id="modal-overlay"></div>
+        <div class="modal-container">
+            <button class="modal-close" id="modal-close" aria-label="Закрити модальне вікно">&times;</button>
+            <div class="modal-content" id="modal-content">
+                <!-- Content will be injected by JS -->
+            </div>
+        </div>
+    </div>
+
+    <button id="back-to-top" class="back-to-top" aria-label="Повернутися вгору">
+        <span class="arrow-up"></span>
+    </button>
+</body>
+</html>
