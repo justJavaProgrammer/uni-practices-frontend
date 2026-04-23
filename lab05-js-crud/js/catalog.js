@@ -1,5 +1,5 @@
 import { getItems, deleteItem } from './api.js';
-import { showLoading, showError, showEmpty } from './ui.js';
+import { showLoading, showError, showEmpty, showStatus } from './ui.js';
 
 let currentParams = {
     q: '',
@@ -135,6 +135,11 @@ async function handleDelete(id, cardElement) {
         try {
             await deleteItem(id);
             cardElement.remove();
+            
+            const statusContainer = document.getElementById('catalog-status');
+            if (statusContainer) {
+                showStatus(statusContainer, 'Course deleted successfully!');
+            }
             
             const catalogContainer = document.getElementById('catalog-container');
             if (catalogContainer.children.length === 0) {
