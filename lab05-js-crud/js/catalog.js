@@ -1,11 +1,62 @@
 import { getItems, deleteItem } from './api.js';
 import { showLoading, showError, showEmpty } from './ui.js';
 
-export async function initCatalog() {
-    const catalogContainer = document.getElementById('catalog-container');
-    if (!catalogContainer) return;
+let currentParams = {
+    q: '',
+    category: '',
+    _sort: 'id',
+    _page: 1,
+    _limit: 6
+};
 
+export async function initCatalog() {
+    console.log('Catalog initialization started');
+    const catalogContainer = document.getElementById('catalog-container');
+    if (!catalogContainer) {
+        console.error('Catalog container not found');
+        return;
+    }
+
+    setupFilters();
     await loadAndRenderItems();
+}
+
+function setupFilters() {
+    const searchInput = document.getElementById('search-input');
+    const categoryFilter = document.getElementById('category-filter');
+    const sortFilter = document.getElementById('sort-filter');
+
+    if (searchInput) {
+        searchInput.addEventListener('input', debounce(async (e) => {
+            currentParams.q = e.target.value;
+            currentParams._page = 1;
+            await loadAndRenderItems();
+        }, 500));
+    }
+
+    if (categoryFilter) {
+        categoryFilter.addEventListener('change', async (e) => {
+            currentParams.category = e.target.value === 'all' ? '' : e.target.value;
+            currentParams._page = 1;
+            await loadAndRenderItems();
+        });
+    }
+
+    if (sortFilter) {
+        sortFilter.addEventListener('change', async (e) => {
+            const value = e.target.value;
+            // json-server v1 uses -prefix for descending order
+            if (value.endsWith('-desc')) {
+                currentParams._sort = '-' + value.replace('-desc', '');
+            } else if (value.endsWith('-asc')) {
+                currentParams._sort = value.replace('-asc', '');
+            } else {
+                currentParams._sort = value;
+            }
+            currentParams._page = 1;
+            await loadAndRenderItems();
+        });
+    }
 }
 
 async function loadAndRenderItems() {
@@ -13,17 +64,35 @@ async function loadAndRenderItems() {
     showLoading(catalogContainer);
 
     try {
-        const { items } = await getItems();
+        const queryString = buildQueryString(currentParams);
+        console.log('Fetching items with query:', queryString);
+        const { items, totalCount } = await getItems(queryString);
+        
+        console.log('Processed items:', items);
         
         if (items.length === 0) {
+            console.log('No items found for current params');
             showEmpty(catalogContainer);
+            renderPagination(0);
             return;
         }
 
         renderItems(items, catalogContainer);
+        renderPagination(totalCount);
     } catch (error) {
+        console.error('Failed to load items:', error);
         showError(catalogContainer, error.message);
     }
+}
+
+function buildQueryString(params) {
+    const searchParams = new URLSearchParams();
+    for (const key in params) {
+        if (params[key] !== undefined && params[key] !== null && params[key] !== '') {
+            searchParams.set(key, params[key]);
+        }
+    }
+    return searchParams.toString();
 }
 
 function renderItems(items, container) {
@@ -39,8 +108,10 @@ function createItemCard(item) {
     card.className = 'card';
     card.dataset.id = item.id;
 
+    const imagePath = item.image ? `../${item.image}` : '../assets/img/img1.jpg';
+
     card.innerHTML = `
-        <img src="../${item.image || 'assets/img/img1.jpg'}" alt="${item.title}">
+        <img src="${imagePath}" alt="${item.title}" onerror="this.src='../assets/img/img1.jpg'">
         <div class="card-content">
             <span class="card-category">${item.category}</span>
             <h3 class="card-title">${item.title}</h3>
@@ -67,10 +138,40 @@ async function handleDelete(id, cardElement) {
             
             const catalogContainer = document.getElementById('catalog-container');
             if (catalogContainer.children.length === 0) {
-                showEmpty(catalogContainer);
+                await loadAndRenderItems();
             }
         } catch (error) {
             alert('Failed to delete item: ' + error.message);
         }
     }
+}
+
+function renderPagination(totalCount) {
+    const paginationContainer = document.getElementById('pagination-container');
+    if (!paginationContainer) return;
+
+    const totalPages = Math.ceil(totalCount / currentParams._limit);
+    paginationContainer.innerHTML = '';
+
+    if (totalPages <= 1) return;
+
+    for (let i = 1; i <= totalPages; i++) {
+        const btn = document.createElement('button');
+        btn.textContent = i;
+        btn.className = `page-btn ${i === currentParams._page ? 'active' : ''}`;
+        btn.addEventListener('click', async () => {
+            currentParams._page = i;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            await loadAndRenderItems();
+        });
+        paginationContainer.appendChild(btn);
+    }
+}
+
+function debounce(func, wait) {
+    let timeout;
+    return function(...args) {
+        clearTimeout(timeout);
+        timeout = setTimeout(() => func.apply(this, args), wait);
+    };
 }
