@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Каталог курсів</title>
+    <link rel="stylesheet" href="../styles/style.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Головна</a></li>
+                <li><a href="catalog.html" class="active">Каталог</a></li>
+                <li><a href="item-form.html">Додати курс</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h1>Каталог курсів</h1>
+
+        <section class="filters">
+            <input type="text" id="search-input" placeholder="Пошук курсу...">
+            <select id="category-filter">
+                <option value="all">Усі категорії</option>
+                <option value="Frontend">Frontend</option>
+                <option value="Backend">Backend</option>
+                <option value="Programming">Programming</option>
+                <option value="Design">Design</option>
+            </select>
+            <select id="sort-filter">
+                <option value="id-asc">Спочатку старі</option>
+                <option value="id-desc">Спочатку нові</option>
+                <option value="price-asc">Найдешевші</option>
+                <option value="price-desc">Найдорожчі</option>
+                <option value="rating-desc">Найвищий рейтинг</option>
+            </select>
+        </section>
+
+        <div id="catalog-container">
+            <!-- Сюди буде рендеритись список курсів -->
+            <div class="loading">Завантаження...</div>
+        </div>
+
+        <section class="pagination" id="pagination-container">
+            <!-- Сюди буде рендеритись пагінація -->
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Університетський курс фронтенду</p>
+    </footer>
+
+    <script src="../js/main.js" type="module"></script>
+</body>
+</html>

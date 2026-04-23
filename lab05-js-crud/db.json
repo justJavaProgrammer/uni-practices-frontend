@@ -1,0 +1,124 @@
+{
+  "items": [
+    {
+      "id": "1",
+      "title": "Introduction to HTML5",
+      "category": "Frontend",
+      "description": "Learn the basics of structuring the web with HTML5 elements.",
+      "image": "assets/img/img1.jpg",
+      "price": 29.99,
+      "rating": 4.5,
+      "level": "Beginner"
+    },
+    {
+      "id": "2",
+      "title": "CSS3 Masterclass",
+      "category": "Frontend",
+      "description": "Master advanced styling techniques using CSS3 Flexbox and Grid.",
+      "image": "assets/img/img1.jpg",
+      "price": 49.99,
+      "rating": 4.8,
+      "level": "Intermediate"
+    },
+    {
+      "id": "3",
+      "title": "JavaScript Fundamentals",
+      "category": "Programming",
+      "description": "Core concepts of JavaScript, including loops, functions, and objects.",
+      "image": "assets/img/img1.jpg",
+      "price": 59.99,
+      "rating": 4.7,
+      "level": "Beginner"
+    },
+    {
+      "id": "4",
+      "title": "UI/UX Design Basics",
+      "category": "Design",
+      "description": "Principles of user interface and user experience design for the web.",
+      "image": "assets/img/img1.jpg",
+      "price": 39.99,
+      "rating": 4.4,
+      "level": "Beginner"
+    },
+    {
+      "id": "5",
+      "title": "React.js for Beginners",
+      "category": "Frontend",
+      "description": "Build modern web applications with React components and state.",
+      "image": "assets/img/img1.jpg",
+      "price": 79.99,
+      "rating": 4.9,
+      "level": "Intermediate"
+    },
+    {
+      "id": "6",
+      "title": "Advanced Node.js",
+      "category": "Backend",
+      "description": "Scalable server-side development using Node.js and Express.",
+      "image": "assets/img/img1.jpg",
+      "price": 89.99,
+      "rating": 4.6,
+      "level": "Advanced"
+    },
+    {
+      "id": "7",
+      "title": "Responsive Web Design",
+      "category": "Frontend",
+      "description": "Making websites look great on all devices with media queries.",
+      "image": "assets/img/img1.jpg",
+      "price": 34.99,
+      "rating": 4.3,
+      "level": "Intermediate"
+    },
+    {
+      "id": "8",
+      "title": "Web Performance Optimization",
+      "category": "Performance",
+      "description": "Techniques to speed up your website and improve Core Web Vitals.",
+      "image": "assets/img/img1.jpg",
+      "price": 54.99,
+      "rating": 4.2,
+      "level": "Advanced"
+    },
+    {
+      "id": "9",
+      "title": "Modern JavaScript (ES6+)",
+      "category": "Programming",
+      "description": "Deep dive into ES6+ features like Arrow Functions and Promises.",
+      "image": "assets/img/img1.jpg",
+      "price": 44.99,
+      "rating": 4.7,
+      "level": "Intermediate"
+    },
+    {
+      "id": "10",
+      "title": "Database Design with SQL",
+      "category": "Backend",
+      "description": "Learn to design efficient relational databases using SQL.",
+      "image": "assets/img/img1.jpg",
+      "price": 64.99,
+      "rating": 4.5,
+      "level": "Beginner"
+    },
+    {
+      "id": "11",
+      "title": "Vue.js 3 Masterclass",
+      "category": "Frontend",
+      "description": "Build high-performance applications with Vue.js Composition API.",
+      "image": "assets/img/img1.jpg",
+      "price": 74.99,
+      "rating": 4.8,
+      "level": "Intermediate"
+    },
+    {
+      "id": "12",
+      "title": "Graphic Design for Web",
+      "category": "Design",
+      "description": "Using Photoshop and Illustrator to create assets for web pages.",
+      "image": "assets/img/img1.jpg",
+      "price": 49.99,
+      "rating": 4.1,
+      "level": "Beginner"
+    }
+  ]
+}
