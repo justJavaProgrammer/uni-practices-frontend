@@ -105,17 +105,17 @@ function initCatalogControls() {
 
 /**
  * Update catalog based on current search, filter, and sort values
- * @param {boolean} resetCount - Whether to reset visible items count to initial
  */
 function updateCatalog(resetCount = false) {
     if (resetCount) {
         visibleCount = ITEMS_PER_PAGE;
     }
 
+    // Defensive check for controls
     const criteria = {
-        search: elements.searchInput.value,
-        category: elements.categoryFilter.value,
-        sortBy: elements.sortSelect.value,
+        search: elements.searchInput ? elements.searchInput.value : '',
+        category: elements.categoryFilter ? elements.categoryFilter.value : 'all',
+        sortBy: elements.sortSelect ? elements.sortSelect.value : 'default',
     };
 
     filteredItems = filterAndSortItems(allItems, criteria);
@@ -142,6 +142,8 @@ function updateShowMoreButton() {
 }
 
 function showState(state) {
+    if (!elements.loadingState) return;
+    
     elements.loadingState.classList.add('is-hidden');
     elements.errorState.classList.add('is-hidden');
     elements.emptyState.classList.add('is-hidden');
@@ -160,7 +162,7 @@ function showState(state) {
  */
 function showItemDetails(id) {
     const item = allItems.find(i => i.id === id);
-    if (!item) return;
+    if (!item || !elements.modalContent) return;
 
     elements.modalContent.innerHTML = `
         <div class="modal-details">
@@ -185,12 +187,14 @@ function showItemDetails(id) {
 }
 
 function openModal() {
+    if (!elements.modal) return;
     elements.modal.classList.add('is-open');
     elements.modal.setAttribute('aria-hidden', 'false');
     document.body.classList.add('modal-open');
 }
 
 function closeModal() {
+    if (!elements.modal) return;
     elements.modal.classList.remove('is-open');
     elements.modal.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('modal-open');
@@ -203,7 +207,7 @@ function initModalEvents() {
     elements.modalOverlay.addEventListener('click', closeModal);
     
     document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && elements.modal.classList.contains('is-open')) {
+        if (e.key === 'Escape' && elements.modal && elements.modal.classList.contains('is-open')) {
             closeModal();
         }
     });
@@ -211,6 +215,8 @@ function initModalEvents() {
 
 function initLightbox() {
     const lightboxTriggers = document.querySelectorAll('.js-lightbox');
+    if (lightboxTriggers.length === 0 || !elements.modalContent) return;
+    
     lightboxTriggers.forEach(trigger => {
         trigger.addEventListener('click', () => {
             const imgSrc = trigger.getAttribute('src');
@@ -296,8 +302,115 @@ function initAccordion() {
 
 function initContactForm() {
     const form = document.getElementById('contact-form');
+    const successBlock = document.getElementById('contact-success');
     if (!form) return;
-    // ... logic from Lab 03 could be fully integrated here if needed
+
+    const nameInput = document.getElementById('name');
+    const nameError = document.getElementById('name-error');
+    const emailInput = document.getElementById('email');
+    const emailError = document.getElementById('email-error');
+    const messageInput = document.getElementById('message');
+    const messageError = document.getElementById('message-error');
+    const charCounter = document.getElementById('char-counter');
+    const agreeInput = document.getElementById('agree');
+    const agreeError = document.getElementById('agree-error');
+    const maxLength = messageInput?.getAttribute('maxlength') || 500;
+
+    const draftKey = 'contactDraft';
+
+    const savedDraft = JSON.parse(localStorage.getItem(draftKey) || '{}');
+    if (savedDraft.name && nameInput) nameInput.value = savedDraft.name;
+    if (savedDraft.email && emailInput) emailInput.value = savedDraft.email;
+    if (savedDraft.message && messageInput) {
+        messageInput.value = savedDraft.message;
+        updateCharCounter();
+    }
+
+    const saveDraft = () => {
+        const draft = {
+            name: nameInput?.value,
+            email: emailInput?.value,
+            message: messageInput?.value
+        };
+        localStorage.setItem(draftKey, JSON.stringify(draft));
+    };
+
+    function updateCharCounter() {
+        if (!messageInput || !charCounter) return;
+        const currentLength = messageInput.value.length;
+        charCounter.textContent = `${currentLength} / ${maxLength}`;
+        if (currentLength >= maxLength) charCounter.classList.add('limit-reached');
+        else charCounter.classList.remove('limit-reached');
+    }
+
+    messageInput?.addEventListener('input', () => {
+        updateCharCounter();
+        saveDraft();
+    });
+
+    nameInput?.addEventListener('input', () => {
+        validateField(nameInput, nameError, (val) => val.trim().length >= 2, 'Ім’я має містити принаймні 2 символи');
+        saveDraft();
+    });
+
+    emailInput?.addEventListener('input', () => {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        validateField(emailInput, emailError, (val) => emailRegex.test(val), 'Введіть коректну адресу email');
+        saveDraft();
+    });
+
+    const validateField = (input, errorElement, validationFn, errorMessage, forceShow = false) => {
+        if (!input || !errorElement) return true;
+        const isValid = validationFn(input.value);
+        if (!isValid && (input.value !== '' || forceShow)) {
+            input.classList.add('is-invalid');
+            errorElement.textContent = errorMessage;
+        } else {
+            input.classList.remove('is-invalid');
+            errorElement.textContent = '';
+        }
+        return isValid;
+    };
+
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const isNameValid = validateField(nameInput, nameError, (val) => val.trim().length >= 2, 'Ім’я обов’язкове (мін. 2 символи)', true);
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const isEmailValid = validateField(emailInput, emailError, (val) => emailRegex.test(val), 'Введіть коректну адресу email', true);
+        const isMessageValid = validateField(messageInput, messageError, (val) => val.trim() !== '', 'Повідомлення не може бути порожнім', true);
+        
+        if (agreeInput && !agreeInput.checked) agreeError.textContent = 'Ви повинні погодитися з умовами';
+        else if (agreeError) agreeError.textContent = '';
+
+        if (isNameValid && isEmailValid && isMessageValid && (!agreeInput || agreeInput.checked)) {
+            const topicSelect = document.getElementById('topic');
+            const topicText = topicSelect ? topicSelect.options[topicSelect.selectedIndex].text : '';
+
+            const successDataList = document.getElementById('success-data');
+            if (successDataList) {
+                successDataList.innerHTML = `
+                    <li><strong>Email:</strong> ${emailInput.value}</li>
+                    <li><strong>Тема:</strong> ${topicText}</li>
+                    <li><strong>Повідомлення:</strong> ${messageInput.value}</li>
+                `;
+            }
+
+            if (document.getElementById('success-name')) document.getElementById('success-name').textContent = nameInput.value;
+            form.hidden = true;
+            if (successBlock) {
+                successBlock.hidden = false;
+                successBlock.scrollIntoView({ behavior: 'smooth' });
+            }
+            localStorage.removeItem(draftKey);
+            form.reset();
+            updateCharCounter();
+        }
+    });
+
+    document.getElementById('success-close')?.addEventListener('click', () => {
+        if (successBlock) successBlock.hidden = true;
+        form.hidden = false;
+    });
 }
 
 // Start application
