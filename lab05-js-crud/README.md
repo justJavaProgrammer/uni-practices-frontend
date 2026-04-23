@@ -36,3 +36,17 @@
 - `js/form.js`: Логіка форми створення та редагування.
 - `js/ui.js`: Допоміжні функції для відображення станів інтерфейсу.
 - `js/main.js`: Точка входу, ініціалізація сторінок.
+
+## Скріншоти
+![img_4.png](screenshots/img_4.png)
+![Пошук](screenshots/1.png)
+![Фільтри](screenshots/2.png)
+![Результат оновлення](screenshots/6.png)
+![Оновлення](screenshots/3.png)
+![Інвалідні дані](screenshots/4.png)
+![Інвалідні дані 2](screenshots/5.png)
+![Видалення](screenshots/img.png)
+![Результат видалення](screenshots/img_1.png)
+### Створення
+![img_2.png](screenshots/img_2.png)
+![img_3.png](screenshots/img_3.png)

@@ -7,7 +7,7 @@
       "description": "Learn the basics of structuring the web with HTML5 elements.",
       "image": "assets/img/img1.jpg",
       "price": 29.99,
-      "rating": 4.5,
+      "rating": 5,
       "level": "Beginner"
     },
     {
@@ -19,16 +19,6 @@
       "price": 49.99,
       "rating": 4.8,
       "level": "Intermediate"
-    },
-    {
-      "id": "3",
-      "title": "JavaScript Fundamentals",
-      "category": "Programming",
-      "description": "Core concepts of JavaScript, including loops, functions, and objects.",
-      "image": "assets/img/img1.jpg",
-      "price": 59.99,
-      "rating": 4.7,
-      "level": "Beginner"
     },
     {
       "id": "4",
@@ -59,16 +49,6 @@
       "price": 89.99,
       "rating": 4.6,
       "level": "Advanced"
-    },
-    {
-      "id": "7",
-      "title": "Responsive Web Design",
-      "category": "Frontend",
-      "description": "Making websites look great on all devices with media queries.",
-      "image": "assets/img/img1.jpg",
-      "price": 34.99,
-      "rating": 4.3,
-      "level": "Intermediate"
     },
     {
       "id": "8",
@@ -119,6 +99,17 @@
       "price": 49.99,
       "rating": 4.1,
       "level": "Beginner"
+    },
+    {
+      "id": "Bw76P9c",
+      "title": "Java Programming",
+      "category": "Backend",
+      "price": 50,
+      "rating": 4,
+      "level": "Beginner",
+      "description": "Java Programming for beginners",
+      "image": "assets/img/img1.jpg"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }
