@@ -14,11 +14,13 @@ export function renderCatalog(items) {
     container.innerHTML = '';
     
     if (!items || items.length === 0) {
-        document.getElementById('empty-state').classList.remove('is-hidden');
+        const emptyState = document.getElementById('empty-state');
+        if (emptyState) emptyState.classList.remove('is-hidden');
         return;
     }
 
-    document.getElementById('empty-state').classList.add('is-hidden');
+    const emptyState = document.getElementById('empty-state');
+    if (emptyState) emptyState.classList.add('is-hidden');
 
     const fragment = document.createDocumentFragment();
     
@@ -87,8 +89,12 @@ function createCourseCard(item) {
 
     const activeClass = isFavorited(item.id) ? 'is-active' : '';
 
+    // Adjust image path for subpages
+    const isSubPage = window.location.pathname.includes('/pages/');
+    const imagePath = isSubPage ? `../${item.image}` : item.image;
+
     card.innerHTML = `
-        <img src="${item.image}" alt="${item.title}" class="course-image">
+        <img src="${imagePath}" alt="${item.title}" class="course-image">
         <div class="course-content">
             <span class="course-category">${item.category}</span>
             <h3 class="course-title">${item.title}</h3>

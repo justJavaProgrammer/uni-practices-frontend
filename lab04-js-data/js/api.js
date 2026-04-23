@@ -3,7 +3,9 @@
  */
 
 export async function loadItems() {
-    const DATA_URL = './data/items.json';
+    // Determine path based on current location (root or /pages/)
+    const isSubPage = window.location.pathname.includes('/pages/');
+    const DATA_URL = isSubPage ? '../data/items.json' : './data/items.json';
     
     try {
         const response = await fetch(DATA_URL);

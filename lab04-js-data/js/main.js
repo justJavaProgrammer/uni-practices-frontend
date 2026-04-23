@@ -36,6 +36,7 @@ async function init() {
     updateFooterYear();
     initAccordion();
     initContactForm();
+    initStaticFilters(); // Original filters for index.html
 
     // Catalog Logic (Lab 04)
     if (elements.catalogContainer) {
@@ -296,6 +297,29 @@ function initAccordion() {
             const isActive = item.classList.contains('is-active');
             document.querySelectorAll('.accordion-item').forEach(i => i.classList.remove('is-active'));
             if (!isActive) item.classList.add('is-active');
+        });
+    });
+}
+
+function initStaticFilters() {
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    const cards = document.querySelectorAll('.card[data-category]');
+
+    if (filterButtons.length === 0) return;
+
+    filterButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const filter = button.getAttribute('data-filter');
+            filterButtons.forEach(btn => btn.classList.remove('is-active'));
+            button.classList.add('is-active');
+
+            cards.forEach(card => {
+                if (filter === 'all' || card.getAttribute('data-category') === filter) {
+                    card.classList.remove('is-hidden');
+                } else {
+                    card.classList.add('is-hidden');
+                }
+            });
         });
     });
 }
