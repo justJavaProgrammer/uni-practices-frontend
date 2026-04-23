@@ -7,7 +7,7 @@
     <title>Мій перший HTML-сайт - Головна</title>
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/responsive.css">
-    <script src="js/main.js" defer></script>
+    <script src="js/main.js" type="module" defer></script>
 </head>
 <body>
     <header class="site-header">
@@ -29,76 +29,58 @@
     </header>
 
     <main class="container">
-        <h1>Мій перший HTML-сайт</h1>
-        <p>Це моя перша практична робота з курсу <strong>Front-end розробки</strong>. Тут я вчуся основам HTML5 та семантичній розмітці.</p>
+        <h1>Каталог курсів Front-end</h1>
+        <p>Це динамічний каталог курсів, де дані завантажуються асинхронно. Ви можете шукати, фільтрувати та сортувати курси.</p>
 
-        <div class="filters">
-            <button class="filter-btn is-active" data-filter="all">Усі</button>
-            <button class="filter-btn" data-filter="info">Інфо</button>
-            <button class="filter-btn" data-filter="media">Медіа</button>
-            <button class="filter-btn" data-filter="schedule">Розклад</button>
+        <section class="catalog-controls">
+            <div class="search-box">
+                <input type="text" id="catalog-search" placeholder="Пошук курсів...">
+            </div>
+            
+            <div class="filter-group">
+                <label for="category-filter">Категорія:</label>
+                <select id="category-filter">
+                    <option value="all">Усі категорії</option>
+                    <option value="Frontend">Frontend</option>
+                    <option value="Programming">Programming</option>
+                    <option value="Design">Design</option>
+                    <option value="Backend">Backend</option>
+                    <option value="Performance">Performance</option>
+                </select>
+            </div>
+
+            <div class="sort-group">
+                <label for="sort-select">Сортувати:</label>
+                <select id="sort-select">
+                    <option value="default">За замовчуванням</option>
+                    <option value="price-asc">Ціна (низька > висока)</option>
+                    <option value="price-desc">Ціна (висока > низька)</option>
+                    <option value="rating-desc">Рейтинг (найвищий)</option>
+                    <option value="title-asc">Назва (А-Я)</option>
+                </select>
+            </div>
+        </section>
+
+        <div id="catalog-status" class="catalog-status">
+            <div id="loading-state" class="status-message is-hidden">
+                <div class="loader"></div>
+                <p>Завантаження курсів...</p>
+            </div>
+            <div id="error-state" class="status-message is-hidden">
+                <p class="error-text">Помилка завантаження даних. Спробуйте пізніше.</p>
+            </div>
+            <div id="empty-state" class="status-message is-hidden">
+                <p>Нічого не знайдено за вашим запитом.</p>
+            </div>
         </div>
 
-        <section class="card" data-category="info">
-            <h2>Про цей проект</h2>
-            <p>Проект складається з трьох сторінок, кожна з яких демонструє різні аспекти HTML. <em>Семантичність</em> є ключовим фактором при написанні коду.</p>
-            <p>Нижче наведено списки моїх цілей на цей курс.</p>
+        <div id="catalog-container" class="catalog-grid" data-catalog>
+            <!-- Картки будуть згенеровані JavaScript -->
+        </div>
 
-            <h3>Мої цілі (Маркований список)</h3>
-            <ul>
-                <li>Вивчити основи HTML та CSS</li>
-                <li>Навчитися працювати з формами</li>
-                <li>Зрозуміти принципи адаптивного дизайну</li>
-                <li>Опанувати базовий JavaScript</li>
-            </ul>
-
-            <h3>Етапи навчання (Нумерований список)</h3>
-            <ol>
-                <li>Вивчення структури документа</li>
-                <li>Робота з контентом та медіа</li>
-                <li>Створення складних форм</li>
-                <li>Фінальний проект</li>
-            </ol>
-        </section>
-
-        <section class="card" data-category="media">
-            <h2>Візуальний контент</h2>
-            <figure>
-                <img src="assets/img/img1.jpg" alt="Моє перше фото на сайті" width="400" class="js-lightbox" style="cursor: zoom-in;">
-                <figcaption>Приклад вставленого зображення через тег figure (клікніть, щоб збільшити)</figcaption>
-            </figure>
-        </section>
-
-        <section class="card" data-category="schedule">
-            <h2>Мій розклад занять</h2>
-            <table>
-                <caption>Тижневий розклад Front-end курсу</caption>
-                <thead>
-                    <tr>
-                        <th>День</th>
-                        <th>Час</th>
-                        <th>Тема</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Понеділок</td>
-                        <td>10:00 - 12:00</td>
-                        <td>Основи HTML</td>
-                    </tr>
-                    <tr>
-                        <td>Середа</td>
-                        <td>14:00 - 16:00</td>
-                        <td>Стилізація CSS</td>
-                    </tr>
-                    <tr>
-                        <td>П'ятниця</td>
-                        <td>09:00 - 11:00</td>
-                        <td>Практичне заняття</td>
-                    </tr>
-                </tbody>
-            </table>
-        </section>
+        <div class="pagination-container">
+            <button id="show-more-btn" class="btn btn-secondary is-hidden">Показати ще</button>
+        </div>
     </main>
 
     <footer class="site-footer">
