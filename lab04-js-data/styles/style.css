@@ -851,7 +851,7 @@ body.modal-open {
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
-    margin-bottom: 2.5rem;
+    margin-bottom: 1rem;
     padding: 1.5rem;
     background-color: var(--color-surface);
     border-radius: var(--border-radius);
@@ -895,7 +895,16 @@ body.modal-open {
 
 .catalog-status {
     text-align: center;
-    padding: 3rem;
+    padding: 0;
+}
+
+.catalog-status:not(:empty) {
+    padding: 0.5rem 0 1rem;
+}
+
+.catalog-status .status-message:not(.is-hidden) {
+    display: block;
+    padding: 1.5rem;
 }
 
 .loader {
@@ -922,7 +931,7 @@ body.modal-open {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 2rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1.5rem;
 }
 
 .course-card {
@@ -999,7 +1008,7 @@ body.modal-open {
 .pagination-container {
     display: flex;
     justify-content: center;
-    margin-bottom: 4rem;
+    margin-bottom: 2rem;
 }
 
 /* Favorites Button Styles */

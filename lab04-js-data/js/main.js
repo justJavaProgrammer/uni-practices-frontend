@@ -133,28 +133,36 @@ function handleShowMore() {
 }
 
 function updateShowMoreButton() {
-    if (!elements.showMoreBtn) return;
+    const paginationContainer = document.querySelector('.pagination-container');
+    if (!elements.showMoreBtn || !paginationContainer) return;
     
     if (filteredItems.length > visibleCount) {
         elements.showMoreBtn.classList.remove('is-hidden');
+        paginationContainer.classList.remove('is-hidden');
     } else {
         elements.showMoreBtn.classList.add('is-hidden');
+        paginationContainer.classList.add('is-hidden');
     }
 }
 
 function showState(state) {
-    if (!elements.loadingState) return;
+    const statusContainer = document.getElementById('catalog-status');
+    if (!elements.loadingState || !statusContainer) return;
     
     elements.loadingState.classList.add('is-hidden');
     elements.errorState.classList.add('is-hidden');
     elements.emptyState.classList.add('is-hidden');
+    statusContainer.classList.add('is-hidden');
     
     if (state === 'loading') {
         elements.loadingState.classList.remove('is-hidden');
+        statusContainer.classList.remove('is-hidden');
     } else if (state === 'error') {
         elements.errorState.classList.remove('is-hidden');
+        statusContainer.classList.remove('is-hidden');
     } else if (state === 'empty') {
         elements.emptyState.classList.remove('is-hidden');
+        statusContainer.classList.remove('is-hidden');
     }
 }
 
